@@ -10,10 +10,22 @@ class MyList
     end
 
     def each
-        block_given?   
+        if block_given?
+            for item in @list
+                yield(item)
+            end
+        end
     end
 end
 
 mylist = MyList.new(1,2,3,4)
 
-puts mylist.each
+mylist.each
+
+mylist.all? {|e| e < 5}
+mylist.all? {|e| e > 5}
+
+mylist.any? {|e| e == 2}
+mylist.any? {|e| e == 5}
+
+mylist.filter {|e| e.even?}
