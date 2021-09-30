@@ -1,31 +1,29 @@
-require './MyEnumerable.rb'  
+require './my_enumerable.rb'
 
 class MyList
-    attr_accessor :list
+  attr_accessor :list
 
-    include MyEnumerable
+  include MyEnumerable
 
-    def initialize(*numbers)
-        @list = numbers
-    end
+  def initialize(*numbers)
+    @list = numbers
+  end
 
-    def each
-        if block_given?
-            for item in @list
-                yield(item)
-            end
-        end
-    end
+  def each
+    @list.each { |item| yield(item) if block_given? }
+  end
 end
 
-mylist = MyList.new(1,2,3,4)
+# Create our list
+mylist = MyList.new(1, 2, 3, 4)
 
-mylist.each
+# Test #all?
+mylist.all? { |e| e < 5 }
+mylist.all? { |e| e > 5 }
 
-mylist.all? {|e| e < 5}
-mylist.all? {|e| e > 5}
+# Test #any?
+mylist.any? { |e| e == 2 }
+mylist.any? { |e| e == 5 }
 
-mylist.any? {|e| e == 2}
-mylist.any? {|e| e == 5}
-
-mylist.filter {|e| e.even?}
+# Test #filter?
+mylist.filter(&:even?)
